@@ -1,0 +1,29 @@
+{
+  "properties": [
+    {
+      "name": "notifier.backend",
+      "type": "java.lang.String",
+      "description": "Defines which messanger notifications will be sent to."
+    },
+    {
+      "name": "telegram.bot.token",
+      "type": "java.lang.String",
+      "description": "Token that will be used for Telegram API calls."
+    },
+    {
+      "name": "telegram.chat_id",
+      "type": "java.lang.String",
+      "description": "The unique ID of the notifications channel in Telegram."
+    },
+    {
+      "name": "myteam.bot.token",
+      "type": "java.lang.String",
+      "description": "Token that will be used for MyTeam API calls."
+    },
+    {
+      "name": "myteam.chat_id",
+      "type": "java.lang.String",
+      "description": "The unique ID of the notifications channel in MyTeam."
+    }
+  ]
+}

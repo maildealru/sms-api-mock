@@ -1,0 +1,47 @@
+#!/bin/bash
+
+cur_script="$(realpath "$0")"
+cur_directory="$(dirname "$cur_script")"
+
+registry="${SERVICE_REGISTRY}"
+if [ -z "${registry}" ]; then
+    registry="hub.docker.com"
+fi
+
+base_url="${SERVICE_IMAGE_BASE_URL}"
+if [ -z "${base_url}" ]; then
+    base_url="${registry}/maildealru"
+fi
+
+image="${SERVICE_IMAGE}"
+if [ -z "${image}" ]; then
+    image="${base_url}/sms-api-mock"
+fi
+
+version="${SERVICE_VERSION}"
+if [ -z "${version}" ]; then
+    version="$(grep -F 'version = ' "$cur_directory/build.gradle" | sed -E 's/^version = "([^"]+)\"$/\1/')"
+fi
+
+tag="${image}:${version}"
+
+case "$1" in
+login)
+    docker login ${@:2} "${registry}"
+    ;;
+logout)
+    docker logout "${registry}"
+    ;;
+build)
+    docker build ${@:2} -t "${tag}" "${cur_directory}"
+    ;;
+push)
+    docker push "${tag}"
+    ;;
+pull)
+    docker pull "${tag}"
+    ;;
+*)
+    echo $"Usage: $0 {login|logout|build|push|pull}"
+    exit 2
+esac
